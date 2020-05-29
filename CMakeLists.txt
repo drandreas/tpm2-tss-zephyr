@@ -1,0 +1,338 @@
+### TPM Command Transmission Interface (TCTI) #################################
+if(CONFIG_TPM2_TSS_TCTI)
+  zephyr_library_named(tpm2-tss-tcti)
+
+  zephyr_include_directories(
+    import/include
+  )
+
+  target_compile_definitions(tpm2-tss-tcti PRIVATE
+    MAXLOGLEVEL=0
+    TSS2_TCTI_SUPPRESS_POLL_WARNINGS
+  )
+
+  target_include_directories(tpm2-tss-tcti PRIVATE
+    import/include/tss2
+    import/src
+  )
+
+  zephyr_library_sources(
+    src/tcti-zephyrtpm.c
+    import/src/tss2-tcti/tcti-common.c
+  )
+endif()
+
+### Marshaling/Unmarshaling (MU) ##############################################
+if(CONFIG_TPM2_TSS_MU)
+  zephyr_library_named(tpm2-tss-mu)
+
+  target_compile_definitions(tpm2-tss-mu PRIVATE
+    MAXLOGLEVEL=0
+  )
+
+  target_include_directories(tpm2-tss-mu PRIVATE
+    import/include/tss2
+    import/src
+  )
+
+  zephyr_library_sources(
+    import/src/tss2-mu/base-types.c
+    import/src/tss2-mu/tpm2b-types.c
+    import/src/tss2-mu/tpma-types.c
+    import/src/tss2-mu/tpml-types.c
+    import/src/tss2-mu/tpms-types.c
+    import/src/tss2-mu/tpmt-types.c
+    import/src/tss2-mu/tpmu-types.c
+  )
+endif()
+
+### System API (SAPI) #########################################################
+if(CONFIG_TPM2_TSS_SAPI)
+  zephyr_library_named(tpm2-tss-sapi)
+
+  target_compile_definitions(tpm2-tss-sapi PRIVATE
+    MAXLOGLEVEL=0
+    TSS2_TCTI_SUPPRESS_POLL_WARNINGS
+  )
+
+  target_include_directories(tpm2-tss-sapi PRIVATE
+    import/include/tss2
+    import/src/tss2-sys
+    import/src
+  )
+
+  zephyr_library_sources(
+    import/src/tss2-sys/api/Tss2_Sys_AC_GetCapability.c
+    import/src/tss2-sys/api/Tss2_Sys_AC_Send.c
+    import/src/tss2-sys/api/Tss2_Sys_ActivateCredential.c
+    import/src/tss2-sys/api/Tss2_Sys_Certify.c
+    import/src/tss2-sys/api/Tss2_Sys_CertifyCreation.c
+    import/src/tss2-sys/api/Tss2_Sys_ChangeEPS.c
+    import/src/tss2-sys/api/Tss2_Sys_ChangePPS.c
+    import/src/tss2-sys/api/Tss2_Sys_Clear.c
+    import/src/tss2-sys/api/Tss2_Sys_ClearControl.c
+    import/src/tss2-sys/api/Tss2_Sys_ClockRateAdjust.c
+    import/src/tss2-sys/api/Tss2_Sys_ClockSet.c
+    import/src/tss2-sys/api/Tss2_Sys_Commit.c
+    import/src/tss2-sys/api/Tss2_Sys_ContextLoad.c
+    import/src/tss2-sys/api/Tss2_Sys_ContextSave.c
+    import/src/tss2-sys/api/Tss2_Sys_Create.c
+    import/src/tss2-sys/api/Tss2_Sys_CreateLoaded.c
+    import/src/tss2-sys/api/Tss2_Sys_CreatePrimary.c
+    import/src/tss2-sys/api/Tss2_Sys_DictionaryAttackLockReset.c
+    import/src/tss2-sys/api/Tss2_Sys_DictionaryAttackParameters.c
+    import/src/tss2-sys/api/Tss2_Sys_Duplicate.c
+    import/src/tss2-sys/api/Tss2_Sys_ECC_Parameters.c
+    import/src/tss2-sys/api/Tss2_Sys_ECDH_KeyGen.c
+    import/src/tss2-sys/api/Tss2_Sys_ECDH_ZGen.c
+    import/src/tss2-sys/api/Tss2_Sys_EC_Ephemeral.c
+    import/src/tss2-sys/api/Tss2_Sys_EncryptDecrypt.c
+    import/src/tss2-sys/api/Tss2_Sys_EncryptDecrypt2.c
+    import/src/tss2-sys/api/Tss2_Sys_EventSequenceComplete.c
+    import/src/tss2-sys/api/Tss2_Sys_EvictControl.c
+    import/src/tss2-sys/api/Tss2_Sys_Execute.c
+    import/src/tss2-sys/api/Tss2_Sys_FieldUpgradeData.c
+    import/src/tss2-sys/api/Tss2_Sys_FieldUpgradeStart.c
+    import/src/tss2-sys/api/Tss2_Sys_Finalize.c
+    import/src/tss2-sys/api/Tss2_Sys_FirmwareRead.c
+    import/src/tss2-sys/api/Tss2_Sys_FlushContext.c
+    import/src/tss2-sys/api/Tss2_Sys_GetCapability.c
+    import/src/tss2-sys/api/Tss2_Sys_GetCommandAuditDigest.c
+    import/src/tss2-sys/api/Tss2_Sys_GetCommandCode.c
+    import/src/tss2-sys/api/Tss2_Sys_GetContextSize.c
+    import/src/tss2-sys/api/Tss2_Sys_GetCpBuffer.c
+    import/src/tss2-sys/api/Tss2_Sys_GetDecryptParam.c
+    import/src/tss2-sys/api/Tss2_Sys_GetEncryptParam.c
+    import/src/tss2-sys/api/Tss2_Sys_GetRandom.c
+    import/src/tss2-sys/api/Tss2_Sys_GetRpBuffer.c
+    import/src/tss2-sys/api/Tss2_Sys_GetRspAuths.c
+    import/src/tss2-sys/api/Tss2_Sys_GetSessionAuditDigest.c
+    import/src/tss2-sys/api/Tss2_Sys_GetTctiContext.c
+    import/src/tss2-sys/api/Tss2_Sys_GetTestResult.c
+    import/src/tss2-sys/api/Tss2_Sys_GetTime.c
+    import/src/tss2-sys/api/Tss2_Sys_HMAC.c
+    import/src/tss2-sys/api/Tss2_Sys_HMAC_Start.c
+    import/src/tss2-sys/api/Tss2_Sys_Hash.c
+    import/src/tss2-sys/api/Tss2_Sys_HashSequenceStart.c
+    import/src/tss2-sys/api/Tss2_Sys_HierarchyChangeAuth.c
+    import/src/tss2-sys/api/Tss2_Sys_HierarchyControl.c
+    import/src/tss2-sys/api/Tss2_Sys_Import.c
+    import/src/tss2-sys/api/Tss2_Sys_IncrementalSelfTest.c
+    import/src/tss2-sys/api/Tss2_Sys_Initialize.c
+    import/src/tss2-sys/api/Tss2_Sys_Load.c
+    import/src/tss2-sys/api/Tss2_Sys_LoadExternal.c
+    import/src/tss2-sys/api/Tss2_Sys_MakeCredential.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_Certify.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_ChangeAuth.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_DefineSpace.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_Extend.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_GlobalWriteLock.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_Increment.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_Read.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_ReadLock.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_ReadPublic.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_SetBits.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_UndefineSpace.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_UndefineSpaceSpecial.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_Write.c
+    import/src/tss2-sys/api/Tss2_Sys_NV_WriteLock.c
+    import/src/tss2-sys/api/Tss2_Sys_ObjectChangeAuth.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_Allocate.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_Event.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_Extend.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_Read.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_Reset.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_SetAuthPolicy.c
+    import/src/tss2-sys/api/Tss2_Sys_PCR_SetAuthValue.c
+    import/src/tss2-sys/api/Tss2_Sys_PP_Commands.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyAuthValue.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyAuthorize.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyAuthorizeNV.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyCommandCode.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyCounterTimer.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyCpHash.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyDuplicationSelect.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyGetDigest.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyLocality.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyNV.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyNameHash.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyNvWritten.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyOR.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyPCR.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyPassword.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyPhysicalPresence.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyRestart.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicySecret.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicySigned.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyTemplate.c
+    import/src/tss2-sys/api/Tss2_Sys_PolicyTicket.c
+    import/src/tss2-sys/api/Tss2_Sys_Policy_AC_SendSelect.c
+    import/src/tss2-sys/api/Tss2_Sys_Quote.c
+    import/src/tss2-sys/api/Tss2_Sys_RSA_Decrypt.c
+    import/src/tss2-sys/api/Tss2_Sys_RSA_Encrypt.c
+    import/src/tss2-sys/api/Tss2_Sys_ReadClock.c
+    import/src/tss2-sys/api/Tss2_Sys_ReadPublic.c
+    import/src/tss2-sys/api/Tss2_Sys_Rewrap.c
+    import/src/tss2-sys/api/Tss2_Sys_SelfTest.c
+    import/src/tss2-sys/api/Tss2_Sys_SequenceComplete.c
+    import/src/tss2-sys/api/Tss2_Sys_SequenceUpdate.c
+    import/src/tss2-sys/api/Tss2_Sys_SetAlgorithmSet.c
+    import/src/tss2-sys/api/Tss2_Sys_SetCmdAuths.c
+    import/src/tss2-sys/api/Tss2_Sys_SetCommandCodeAuditStatus.c
+    import/src/tss2-sys/api/Tss2_Sys_SetDecryptParam.c
+    import/src/tss2-sys/api/Tss2_Sys_SetEncryptParam.c
+    import/src/tss2-sys/api/Tss2_Sys_SetPrimaryPolicy.c
+    import/src/tss2-sys/api/Tss2_Sys_Shutdown.c
+    import/src/tss2-sys/api/Tss2_Sys_Sign.c
+    import/src/tss2-sys/api/Tss2_Sys_StartAuthSession.c
+    import/src/tss2-sys/api/Tss2_Sys_Startup.c
+    import/src/tss2-sys/api/Tss2_Sys_StirRandom.c
+    import/src/tss2-sys/api/Tss2_Sys_TestParms.c
+    import/src/tss2-sys/api/Tss2_Sys_Unseal.c
+    import/src/tss2-sys/api/Tss2_Sys_Vendor_TCG_Test.c
+    import/src/tss2-sys/api/Tss2_Sys_VerifySignature.c
+    import/src/tss2-sys/api/Tss2_Sys_ZGen_2Phase.c
+    import/src/tss2-sys/sysapi_util.c
+  )
+endif()
+
+### Enhanced System API (ESAPI) ###############################################
+if(CONFIG_TPM2_TSS_ESAPI)
+  zephyr_library_named(tpm2-tss-esapi)
+
+  target_compile_definitions(tpm2-tss-esapi PRIVATE
+    MAXLOGLEVEL=0
+    TSS2_TCTI_SUPPRESS_POLL_WARNINGS
+    MBED
+  )
+
+  target_include_directories(tpm2-tss-esapi PRIVATE
+    import/include/tss2
+    import/src/tss2-esys
+    import/src/
+  )
+
+  zephyr_library_sources(
+    import/src/tss2-esys/api/Esys_ActivateCredential.c
+    import/src/tss2-esys/api/Esys_Certify.c
+    import/src/tss2-esys/api/Esys_CertifyCreation.c
+    import/src/tss2-esys/api/Esys_ChangeEPS.c
+    import/src/tss2-esys/api/Esys_ChangePPS.c
+    import/src/tss2-esys/api/Esys_Clear.c
+    import/src/tss2-esys/api/Esys_ClearControl.c
+    import/src/tss2-esys/api/Esys_ClockRateAdjust.c
+    import/src/tss2-esys/api/Esys_ClockSet.c
+    import/src/tss2-esys/api/Esys_Commit.c
+    import/src/tss2-esys/api/Esys_ContextLoad.c
+    import/src/tss2-esys/api/Esys_ContextSave.c
+    import/src/tss2-esys/api/Esys_Create.c
+    import/src/tss2-esys/api/Esys_CreateLoaded.c
+    import/src/tss2-esys/api/Esys_CreatePrimary.c
+    import/src/tss2-esys/api/Esys_DictionaryAttackLockReset.c
+    import/src/tss2-esys/api/Esys_DictionaryAttackParameters.c
+    import/src/tss2-esys/api/Esys_Duplicate.c
+    import/src/tss2-esys/api/Esys_ECC_Parameters.c
+    import/src/tss2-esys/api/Esys_ECDH_KeyGen.c
+    import/src/tss2-esys/api/Esys_ECDH_ZGen.c
+    import/src/tss2-esys/api/Esys_EC_Ephemeral.c
+    import/src/tss2-esys/api/Esys_EncryptDecrypt.c
+    import/src/tss2-esys/api/Esys_EncryptDecrypt2.c
+    import/src/tss2-esys/api/Esys_EventSequenceComplete.c
+    import/src/tss2-esys/api/Esys_EvictControl.c
+    import/src/tss2-esys/api/Esys_FieldUpgradeData.c
+    import/src/tss2-esys/api/Esys_FieldUpgradeStart.c
+    import/src/tss2-esys/api/Esys_FirmwareRead.c
+    import/src/tss2-esys/api/Esys_FlushContext.c
+    import/src/tss2-esys/api/Esys_GetCapability.c
+    import/src/tss2-esys/api/Esys_GetCommandAuditDigest.c
+    import/src/tss2-esys/api/Esys_GetRandom.c
+    import/src/tss2-esys/api/Esys_GetSessionAuditDigest.c
+    import/src/tss2-esys/api/Esys_GetTestResult.c
+    import/src/tss2-esys/api/Esys_GetTime.c
+    import/src/tss2-esys/api/Esys_HMAC.c
+    import/src/tss2-esys/api/Esys_HMAC_Start.c
+    import/src/tss2-esys/api/Esys_Hash.c
+    import/src/tss2-esys/api/Esys_HashSequenceStart.c
+    import/src/tss2-esys/api/Esys_HierarchyChangeAuth.c
+    import/src/tss2-esys/api/Esys_HierarchyControl.c
+    import/src/tss2-esys/api/Esys_Import.c
+    import/src/tss2-esys/api/Esys_IncrementalSelfTest.c
+    import/src/tss2-esys/api/Esys_Load.c
+    import/src/tss2-esys/api/Esys_LoadExternal.c
+    import/src/tss2-esys/api/Esys_MakeCredential.c
+    import/src/tss2-esys/api/Esys_NV_Certify.c
+    import/src/tss2-esys/api/Esys_NV_ChangeAuth.c
+    import/src/tss2-esys/api/Esys_NV_DefineSpace.c
+    import/src/tss2-esys/api/Esys_NV_Extend.c
+    import/src/tss2-esys/api/Esys_NV_GlobalWriteLock.c
+    import/src/tss2-esys/api/Esys_NV_Increment.c
+    import/src/tss2-esys/api/Esys_NV_Read.c
+    import/src/tss2-esys/api/Esys_NV_ReadLock.c
+    import/src/tss2-esys/api/Esys_NV_ReadPublic.c
+    import/src/tss2-esys/api/Esys_NV_SetBits.c
+    import/src/tss2-esys/api/Esys_NV_UndefineSpace.c
+    import/src/tss2-esys/api/Esys_NV_UndefineSpaceSpecial.c
+    import/src/tss2-esys/api/Esys_NV_Write.c
+    import/src/tss2-esys/api/Esys_NV_WriteLock.c
+    import/src/tss2-esys/api/Esys_ObjectChangeAuth.c
+    import/src/tss2-esys/api/Esys_PCR_Allocate.c
+    import/src/tss2-esys/api/Esys_PCR_Event.c
+    import/src/tss2-esys/api/Esys_PCR_Extend.c
+    import/src/tss2-esys/api/Esys_PCR_Read.c
+    import/src/tss2-esys/api/Esys_PCR_Reset.c
+    import/src/tss2-esys/api/Esys_PCR_SetAuthPolicy.c
+    import/src/tss2-esys/api/Esys_PCR_SetAuthValue.c
+    import/src/tss2-esys/api/Esys_PP_Commands.c
+    import/src/tss2-esys/api/Esys_PolicyAuthValue.c
+    import/src/tss2-esys/api/Esys_PolicyAuthorize.c
+    import/src/tss2-esys/api/Esys_PolicyAuthorizeNV.c
+    import/src/tss2-esys/api/Esys_PolicyCommandCode.c
+    import/src/tss2-esys/api/Esys_PolicyCounterTimer.c
+    import/src/tss2-esys/api/Esys_PolicyCpHash.c
+    import/src/tss2-esys/api/Esys_PolicyDuplicationSelect.c
+    import/src/tss2-esys/api/Esys_PolicyGetDigest.c
+    import/src/tss2-esys/api/Esys_PolicyLocality.c
+    import/src/tss2-esys/api/Esys_PolicyNV.c
+    import/src/tss2-esys/api/Esys_PolicyNameHash.c
+    import/src/tss2-esys/api/Esys_PolicyNvWritten.c
+    import/src/tss2-esys/api/Esys_PolicyOR.c
+    import/src/tss2-esys/api/Esys_PolicyPCR.c
+    import/src/tss2-esys/api/Esys_PolicyPassword.c
+    import/src/tss2-esys/api/Esys_PolicyPhysicalPresence.c
+    import/src/tss2-esys/api/Esys_PolicyRestart.c
+    import/src/tss2-esys/api/Esys_PolicySecret.c
+    import/src/tss2-esys/api/Esys_PolicySigned.c
+    import/src/tss2-esys/api/Esys_PolicyTemplate.c
+    import/src/tss2-esys/api/Esys_PolicyTicket.c
+    import/src/tss2-esys/api/Esys_Quote.c
+    import/src/tss2-esys/api/Esys_RSA_Decrypt.c
+    import/src/tss2-esys/api/Esys_RSA_Encrypt.c
+    import/src/tss2-esys/api/Esys_ReadClock.c
+    import/src/tss2-esys/api/Esys_ReadPublic.c
+    import/src/tss2-esys/api/Esys_Rewrap.c
+    import/src/tss2-esys/api/Esys_SelfTest.c
+    import/src/tss2-esys/api/Esys_SequenceComplete.c
+    import/src/tss2-esys/api/Esys_SequenceUpdate.c
+    import/src/tss2-esys/api/Esys_SetAlgorithmSet.c
+    import/src/tss2-esys/api/Esys_SetCommandCodeAuditStatus.c
+    import/src/tss2-esys/api/Esys_SetPrimaryPolicy.c
+    import/src/tss2-esys/api/Esys_Shutdown.c
+    import/src/tss2-esys/api/Esys_Sign.c
+    import/src/tss2-esys/api/Esys_StartAuthSession.c
+    import/src/tss2-esys/api/Esys_Startup.c
+    import/src/tss2-esys/api/Esys_StirRandom.c
+    import/src/tss2-esys/api/Esys_TestParms.c
+    import/src/tss2-esys/api/Esys_Unseal.c
+    import/src/tss2-esys/api/Esys_Vendor_TCG_Test.c
+    import/src/tss2-esys/api/Esys_VerifySignature.c
+    import/src/tss2-esys/api/Esys_ZGen_2Phase.c
+    import/src/tss2-esys/esys_context.c
+    import/src/tss2-esys/esys_crypto.c
+    import/src/tss2-esys/esys_crypto_mbed.c
+    import/src/tss2-esys/esys_free.c
+    import/src/tss2-esys/esys_iutil.c
+    import/src/tss2-esys/esys_mu.c
+    import/src/tss2-esys/esys_tr.c
+  )
+endif()
+
