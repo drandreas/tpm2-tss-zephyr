@@ -1,6 +1,8 @@
 config TPM2_TSS_TCTI
   bool "Enable TPM Command Transmission Interface (TCTI)"
   depends on TPM_TIS_SPI
+  imply MBEDTLS_USER_CONFIG_ENABLE
+  imply MBEDTLS_MAC_ALL_ENABLED
 
 config TPM2_TSS_MU
   bool "Enable Marshaling/Unmarshaling (MU) as described in the TCG TSS 2.0 Marshaling/Unmarshaling API Specification."
@@ -13,3 +15,8 @@ config TPM2_TSS_SAPI
 config TPM2_TSS_ESAPI
   bool "Enable Tnhanced System API (ESAPI) as described in the TSS 2.0 Enhanced System API (ESAPI) Specification."
   depends on TPM2_TSS_SAPI && MBEDTLS
+
+# Since imply does work for boleans only we hack a little
+config MBEDTLS_USER_CONFIG_FILE
+  string "tpm2tss specific mbedtls config" if TPM2_TSS_TCTI
+  default "esys-mbedtls.conf.h"

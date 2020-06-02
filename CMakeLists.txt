@@ -3,6 +3,7 @@ if(CONFIG_TPM2_TSS_TCTI)
   zephyr_library_named(tpm2-tss-tcti)
 
   zephyr_include_directories(
+    include
     import/include
   )
 
