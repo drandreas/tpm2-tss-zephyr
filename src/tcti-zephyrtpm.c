@@ -50,7 +50,17 @@ tcti_device_finalize(TSS2_TCTI_CONTEXT *tctiContext)
 static TSS2_RC
 tcti_device_cancel(TSS2_TCTI_CONTEXT *tctiContext)
 {
-  return TSS2_TCTI_RC_NOT_IMPLEMENTED;
+  //TODO Move somehow into Tss2_TctiLdr_Initialize
+  struct device *dev = device_get_binding("tpm");
+  if (dev == NULL) {
+    return TSS2_TCTI_RC_NO_CONNECTION;
+  }
+
+  if(tpm_device_cancel(dev) < 0) {
+    return TSS2_BASE_RC_IO_ERROR;
+  } else {
+    return TSS2_RC_SUCCESS;
+  }
 }
 
 static TSS2_RC
