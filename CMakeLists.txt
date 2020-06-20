@@ -213,6 +213,10 @@ if(CONFIG_TPM2_TSS_ESAPI)
     import/src/
   )
 
+  zephyr_library_link_libraries(PRIVATE
+    mbedTLS
+  )
+
   zephyr_library_sources(
     import/src/tss2-esys/api/Esys_ActivateCredential.c
     import/src/tss2-esys/api/Esys_Certify.c
