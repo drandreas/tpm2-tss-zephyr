@@ -1,8 +1,10 @@
 config TPM2_TSS_TCTI
   bool "Enable TPM Command Transmission Interface (TCTI)"
   depends on TPM_TIS_SPI
+  depends on NEWLIB_LIBC
   imply MBEDTLS_USER_CONFIG_ENABLE
   imply MBEDTLS_MAC_ALL_ENABLED
+  imply LEGACY_ZEPHYR_INT_TYPES
 
 config TPM2_TSS_MU
   bool "Enable Marshaling/Unmarshaling (MU) as described in the TCG TSS 2.0 Marshaling/Unmarshaling API Specification."
