@@ -35,7 +35,13 @@ tcti_device_receive(TSS2_TCTI_CONTEXT *tctiContext,
     return TSS2_TCTI_RC_NO_CONNECTION;
   }
 
-  if(tpm_device_receive(dev, response_size, response_buffer, timeout) < 0) {
+  // Convert tpm2-tss timeout into k_timeout_t
+  k_timeout_t k_timeout = K_FOREVER;
+  if(timeout >= 0) {
+    k_timeout = K_MSEC(timeout);
+  }
+
+  if(tpm_device_receive(dev, response_size, response_buffer, k_timeout) < 0) {
     return TSS2_BASE_RC_IO_ERROR;
   } else {
     return TSS2_RC_SUCCESS;
