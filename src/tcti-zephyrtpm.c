@@ -11,7 +11,7 @@ tcti_device_transmit(TSS2_TCTI_CONTEXT *tctiContext,
                     const uint8_t *command_buffer)
 {
   //TODO Move somehow into Tss2_TctiLdr_Initialize
-  struct device *dev = device_get_binding("tpm");
+  const struct device *dev = device_get_binding("tpm");
   if (dev == NULL) {
     return TSS2_TCTI_RC_NO_CONNECTION;
   }
@@ -30,7 +30,7 @@ tcti_device_receive(TSS2_TCTI_CONTEXT *tctiContext,
                    int32_t timeout)
 {
   //TODO Move somehow into Tss2_TctiLdr_Initialize
-  struct device *dev = device_get_binding("tpm");
+  const struct device *dev = device_get_binding("tpm");
   if (dev == NULL) {
     return TSS2_TCTI_RC_NO_CONNECTION;
   }
@@ -57,7 +57,7 @@ static TSS2_RC
 tcti_device_cancel(TSS2_TCTI_CONTEXT *tctiContext)
 {
   //TODO Move somehow into Tss2_TctiLdr_Initialize
-  struct device *dev = device_get_binding("tpm");
+  const struct device *dev = device_get_binding("tpm");
   if (dev == NULL) {
     return TSS2_TCTI_RC_NO_CONNECTION;
   }
