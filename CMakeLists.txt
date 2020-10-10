@@ -21,7 +21,7 @@ if(CONFIG_TPM2_TSS_TCTI)
   )
 
   zephyr_library_sources(
-    src/tcti-zephyrtpm.c
+    src/tcti-zephyr.c
     import/src/tss2-tcti/tcti-common.c
   )
 endif()
