@@ -7,9 +7,12 @@ if(CONFIG_TPM2_TSS_TCTI)
     import/include
   )
 
-  target_compile_definitions(tpm2-tss-tcti PRIVATE
-    MAXLOGLEVEL=0
+  zephyr_compile_definitions(
     TSS2_TCTI_SUPPRESS_POLL_WARNINGS
+  )
+
+  zephyr_library_compile_definitions(
+    MAXLOGLEVEL=0
   )
 
   target_include_directories(tpm2-tss-tcti PRIVATE
@@ -27,7 +30,7 @@ endif()
 if(CONFIG_TPM2_TSS_MU)
   zephyr_library_named(tpm2-tss-mu)
 
-  target_compile_definitions(tpm2-tss-mu PRIVATE
+  zephyr_library_compile_definitions(
     MAXLOGLEVEL=0
   )
 
@@ -51,9 +54,8 @@ endif()
 if(CONFIG_TPM2_TSS_SAPI)
   zephyr_library_named(tpm2-tss-sapi)
 
-  target_compile_definitions(tpm2-tss-sapi PRIVATE
+  zephyr_library_compile_definitions(
     MAXLOGLEVEL=0
-    TSS2_TCTI_SUPPRESS_POLL_WARNINGS
   )
 
   target_include_directories(tpm2-tss-sapi PRIVATE
@@ -201,9 +203,8 @@ endif()
 if(CONFIG_TPM2_TSS_ESAPI)
   zephyr_library_named(tpm2-tss-esapi)
 
-  target_compile_definitions(tpm2-tss-esapi PRIVATE
+  zephyr_library_compile_definitions(
     MAXLOGLEVEL=0
-    TSS2_TCTI_SUPPRESS_POLL_WARNINGS
     MBED
   )
 
