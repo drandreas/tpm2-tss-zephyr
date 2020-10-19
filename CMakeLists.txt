@@ -21,7 +21,7 @@ if(CONFIG_TPM2_TSS_TCTI)
   )
 
   zephyr_library_sources(
-    src/tcti-zephyr.c
+    src/tss2/tcti-zephyr.c
     import/src/tss2-tcti/tcti-common.c
   )
 endif()
@@ -341,4 +341,15 @@ if(CONFIG_TPM2_TSS_ESAPI)
     import/src/tss2-esys/esys_tr.c
   )
 endif()
+### Enhanced System API (ESAPI) ###############################################
+if(CONFIG_MBEDTLS_ECDSA_ALT_TPM)
+  zephyr_library_named(mbedtls-alt-tpm)
 
+  zephyr_library_link_libraries(PRIVATE
+    mbedTLS
+  )
+
+  zephyr_library_sources(
+    src/mbedtls/ecdsa.c
+  )
+endif()

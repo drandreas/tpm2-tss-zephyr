@@ -21,4 +21,8 @@ config TPM2_TSS_ESAPI
 # Since imply does work for boleans only we hack a little
 config MBEDTLS_USER_CONFIG_FILE
   string "tpm2tss specific mbedtls config" if TPM2_TSS_TCTI
-  default "tss2/tss2_esys_mbedtls.conf.h"
+  default "mbedtls/mbedtls.conf.h"
+
+config MBEDTLS_ECDSA_ALT_TPM
+  depends on TPM2_TSS_ESAPI
+  bool "Execute mbedTLS ECDSA on TPM instead of Software"
