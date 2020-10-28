@@ -4,6 +4,9 @@
 
 #include "tss2-tcti/tcti-common.h"
 
+#include <string.h>
+#include <stdlib.h>
+
 /*
  * This function wraps the "up-cast" of the opaque TCTI context type to the
  * type for the zephyr TCTI context.
@@ -147,7 +150,7 @@ TSS2_RC Tss2_Tcti_Zephyr_Init (
  */
 TSS2_RC Tss2_TctiLdr_Initialize(const char *nameConf, TSS2_TCTI_CONTEXT **context)
 {
-  TSS2_TCTI_CONTEXT *tcti_ctx = calloc(1, sizeof(TSS2_TCTI_ZEPHYR_CONTEXT));
+  TSS2_TCTI_CONTEXT *tcti_ctx = (TSS2_TCTI_CONTEXT *)calloc(1, sizeof(TSS2_TCTI_ZEPHYR_CONTEXT));
   size_t size = sizeof(TSS2_TCTI_ZEPHYR_CONTEXT);
 
   TSS2_RC rc = Tss2_Tcti_Zephyr_Init(tcti_ctx, &size, "tpm");
