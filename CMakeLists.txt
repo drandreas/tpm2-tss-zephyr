@@ -350,6 +350,7 @@ if(CONFIG_MBEDTLS_ECDSA_ALT_TPM)
   )
 
   zephyr_library_sources(
+    src/mbedtls/common.c
     src/mbedtls/ecdsa.c
   )
 endif()
