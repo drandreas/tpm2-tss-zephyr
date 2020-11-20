@@ -182,7 +182,9 @@ int tpm_generate_ec_keypair(tpm_keypair_t *keypair) {
   keypair->empty_auth = 1;
   keypair->parent = ESYS_TR_RH_OWNER;
   memcpy(&keypair->pub_key, pub_key, sizeof(TPM2B_PUBLIC));
+  free(pub_key);
   memcpy(&keypair->priv_key, priv_key, sizeof(TPM2B_PRIVATE));
+  free(priv_key);
 
 cleanup:
   if(parent != ESYS_TR_NONE) {
