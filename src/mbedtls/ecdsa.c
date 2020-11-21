@@ -10,7 +10,7 @@
 LOG_MODULE_REGISTER(tpm_ecdsa, LOG_LEVEL_DBG);
 
 // Global Variables
-static tpm_keypair_t tpm_keypair_ecdsa;
+static tpm_keypair_t tpm_keypair_ecdsa __attribute__ ((aligned (4)));
 
 // Templates of various TPM Structures
 static const TPM2B_DIGEST ownerauth = {
@@ -200,6 +200,10 @@ cleanup:
 
 void tpm_set_ec_keypair(const tpm_keypair_t *keypair) {
   memcpy(&tpm_keypair_ecdsa, keypair, sizeof(tpm_keypair_t));
+}
+
+tpm_keypair_t *tpm_get_ec_keypair_ptr() {
+  return &tpm_keypair_ecdsa;
 }
 
 /**

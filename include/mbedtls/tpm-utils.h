@@ -23,7 +23,7 @@ void tpm_set_device_name(const char *dev);
 
 /**
  * \brief           This function stores an ecdsa keypair in a global variable.
- *                  This kaypair will be used by the mbedtls_ecdsa_sign_alt
+ *                  This kaypair will be used by the \c mbedtls_ecdsa_sign_alt
  *                  function during a CSR sign or TLS handshake.
  * \note            Due to current limitations in the secure socket API there
  *                  is no support for multiple keypairs of the same type.
@@ -32,6 +32,16 @@ void tpm_set_device_name(const char *dev);
  *                  after this function has completed.
  */
 void tpm_set_ec_keypair(const tpm_keypair_t *keypair);
+
+/**
+ * \brief           This function returns a pointer to the global variable used
+ *                  by \c mbedtls_ecdsa_sign_alt. This allows in contrast to
+ *                  \c tpm_set_ec_keypair in place modifications of the keypair.
+ *                  On one hand this saves memory for constraint devices on the
+ *                   other it adds a risk for race conditions. Choose wisely.
+ * \return          \c pointer to the variable used by \c mbedtls_ecdsa_sign_alt
+ */
+tpm_keypair_t *tpm_get_ec_keypair_ptr();
 
 /**
  * \brief           This function creates an ecdsa keypair and copies it to
