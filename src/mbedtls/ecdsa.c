@@ -191,7 +191,7 @@ cleanup:
     Esys_FlushContext(esys_ctx, parent);
   }
 
-  if(esys_ctx == NULL) {
+  if(esys_ctx != NULL) {
     tpm_esys_finalize(&esys_ctx);
   }
 
@@ -354,7 +354,7 @@ cleanup:
     Esys_FlushContext(esys_ctx, parent);
   }
 
-  if(esys_ctx == NULL) {
+  if(esys_ctx != NULL) {
     tpm_esys_finalize(&esys_ctx);
   }
 
