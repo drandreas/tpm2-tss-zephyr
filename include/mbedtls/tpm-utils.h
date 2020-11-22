@@ -4,6 +4,10 @@
 #include <mbedtls/pk.h>
 #include <tss2/tss2_esys.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct tpm_keypair {
   int32_t       empty_auth;
   uint32_t      parent;
@@ -95,3 +99,7 @@ int tpm_store_keypair_der(const tpm_keypair_t *keypair, uint8_t* buf, size_t *le
  *                  This function will setup
  */
 int tpm_export_pubkey(TPM2B_PUBLIC *pub_key, mbedtls_pk_context* ctx);
+
+#ifdef __cplusplus
+}
+#endif
