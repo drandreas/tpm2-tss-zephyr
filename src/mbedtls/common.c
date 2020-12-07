@@ -15,7 +15,7 @@
 LOG_MODULE_REGISTER(tpm_common, LOG_LEVEL_DBG);
 
 // TPM2-TSS-Engine TPM BLOB OID "2.23.133.10.1.3"
-#define OID_TSS2_BLOB "\x67\x81\x05\x0A\x01\x03"
+static const char OID_TSS2_BLOB[] = { 0x67, 0x81, 0x05, 0x0A, 0x01, 0x03 };
 
 // TPM2-TSS-Engine ASN.1-Format
 // https://github.com/tpm2-software/tpm2-tools/issues/1599
