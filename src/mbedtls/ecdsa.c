@@ -7,7 +7,7 @@
 
 #include "common.h"
 
-LOG_MODULE_REGISTER(tpm_ecdsa, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(tpm_ecdsa, LOG_LEVEL_INF);
 
 // Global Variables
 static tpm_keypair_t tpm_keypair_ecdsa __attribute__ ((aligned (4)));
@@ -243,6 +243,8 @@ int mbedtls_ecdsa_sign(mbedtls_ecp_group *grp,
                        int (*f_rng)(void *, unsigned char *, size_t),
                        void *p_rng)
 {
+  LOG_DBG("ECDSA sign begin");
+
   int ret = 0;
 
   ESYS_CONTEXT *esys_ctx = NULL;
@@ -361,6 +363,8 @@ cleanup:
   if(esys_ctx != NULL) {
     tpm_esys_finalize(&esys_ctx);
   }
+
+  LOG_DBG("ECDSA sign end");
 
   return ret;
 }
